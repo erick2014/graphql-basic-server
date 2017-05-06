@@ -1,0 +1,17 @@
+{
+  "name": "graphql-test",
+  "version": "1.0.0",
+  "description": "learning graphql ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "erick",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-graphql": "^0.6.4",
+    "graphql": "^0.9.6",
+    "corser":"2.0.1"
+  }
+}
