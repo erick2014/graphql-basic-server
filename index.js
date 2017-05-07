@@ -4,7 +4,7 @@ var graphqlHTTP= require('express-graphql');
 var { buildSchema } = require('graphql');
 var Sequelize = require('sequelize');
 var schema=require("./mySchema");
-var root=require("./resolvers");
+
 var userModel=require("./userModel")
 
 //initialize sequelize
@@ -13,27 +13,11 @@ var sequelizeInstance= new Sequelize("sqlite:database.sqlite",{
     freezeTableName: true,
   }
 });
-
+//define an user model
 var User=sequelizeInstance.define('user',userModel,{freezeTableName:true})
 
-User.findOne()
-  .then( (user)=>{
-    console.log("user??",user);
-  })
-
-var fakeDatabase={};
-
-//If Message had any complex fields, we'd put them on this object
-class Message{
-  constructor(id,{content,author}){
-    this.id=id;
-    this.content=content;
-    this.author=author;
-  }
-}
-
-//Maps username to content
-var fakeDatabase={}
+//pass the User model to the resolvers
+var root=require("./resolvers")(User);
 
 var app= express();
 

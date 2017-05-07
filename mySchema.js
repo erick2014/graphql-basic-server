@@ -2,10 +2,16 @@ var graphqlHTTP= require('express-graphql');
 var { buildSchema } = require('graphql');
 
 var schema=buildSchema(`
-
   input MessageInput{
     content:String,
     author:String
+  }
+
+  type MyUser{
+    id:Int,
+    firstName:String,
+    lastName:String,
+    email:String
   }
 
   type Message{
@@ -17,6 +23,7 @@ var schema=buildSchema(`
   type Query{
     hello(myName:String):String
     getMessage(id:ID!):Message
+    getUserInfo:MyUser
   }
 
   type Mutation{
