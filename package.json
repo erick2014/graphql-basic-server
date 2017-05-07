@@ -9,9 +9,11 @@
   "author": "erick",
   "license": "ISC",
   "dependencies": {
+    "corser": "2.0.1",
     "express": "^4.15.2",
     "express-graphql": "^0.6.4",
     "graphql": "^0.9.6",
-    "corser":"2.0.1"
+    "sequelize": "^3.30.4",
+    "sqlite3": "^3.1.8"
   }
 }
