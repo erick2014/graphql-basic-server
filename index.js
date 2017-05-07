@@ -5,10 +5,21 @@ var { buildSchema } = require('graphql');
 var Sequelize = require('sequelize');
 var schema=require("./mySchema");
 var root=require("./resolvers");
-var resolvers=require("./resolvers");
+var userModel=require("./userModel")
 
 //initialize sequelize
-var sequelizeInstance= new Sequelize("sqlite:database.sqlite");
+var sequelizeInstance= new Sequelize("sqlite:database.sqlite",{
+  define: {
+    freezeTableName: true,
+  }
+});
+
+var User=sequelizeInstance.define('user',userModel,{freezeTableName:true})
+
+User.findOne()
+  .then( (user)=>{
+    console.log("user??",user);
+  })
 
 var fakeDatabase={};
 
