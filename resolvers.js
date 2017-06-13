@@ -8,7 +8,6 @@ class Message{
 }
 
 function rootResolver(userModel){
-  console.log("sequlize instance??",userModel)
   //the root provides the top-level API endpoints
   var root={
     hello({myName}){
