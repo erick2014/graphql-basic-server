@@ -23,7 +23,8 @@ var schema=buildSchema(`
   type Query{
     hello(myName:String):String
     getMessage(id:ID!):Message
-    getUserInfo:MyUser
+    getUserInfo(id:ID!):MyUser
+    getUsers:[MyUser]
   }
 
   type Mutation{
