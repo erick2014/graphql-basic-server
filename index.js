@@ -23,19 +23,6 @@ var app= express();
 
 app.use(corser.create());
 
-app.get("/users",function(req,res){
-
-  let users=[
-    {"name":"user1","lastName":"garcia"},
-    {"name":"juan","lastName":"perez"},
-    {"name":"vero","lastName":"garcia"},
-    {"name":"ana","lastName":"garcia"},
-  ]
-
-  res.json(users);
-
-})
-
 app.use('/graphql',graphqlHTTP({
   schema:schema,
   rootValue:root,
