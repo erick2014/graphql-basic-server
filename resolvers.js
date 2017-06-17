@@ -10,13 +10,26 @@ class Message{
 function rootResolver(userModel){
   //the root provides the top-level API endpoints
   var root={
+
     hello({myName}){
       return "my name is "+myName;
     },
-    getUserInfo(){
+
+    getUsers(){
+      return userModel.findAll()
+        .then(users=>{
+          console.log("users found..",users)
+          return [
+            {"firstName":"erick","lastName":"garcia","id":"1","email":"eagm.08@gmail.com"},
+            {"firstName":"ana","lastName":"garcia","id":"2","email":"erickarmandogarcia@hotmail.com"},
+          ]
+        })
+    },
+
+    getUserInfo({id}){
       return userModel.findOne({ 
           "attributes":{exclude:["createdAt","updatedAt"]},
-          "where":{ id:1 }
+          "where":{ id:id }
         })
         .then( (user)=>{
           let userObj=user.get({plain:true});
@@ -24,17 +37,20 @@ function rootResolver(userModel){
         })
       
     },
+
     getMessage({id}){
       if( !fakeDatabase[id] ){
         throw new Error('no message exists with id ' + id);
       }
     },
+
     createMessage({input}){
       //create a random id for our "database"
       var id=require('crypto').randomBytes(10).toString('hex');
       fakeDatabase[id]=input;
       return new Message(id,input);
     },
+
     updateMessage({id,input}){
       if( !fakeDatabase[id] ){
         throw new Error('no message exists with id ' + id);
