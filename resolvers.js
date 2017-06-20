@@ -16,13 +16,15 @@ function rootResolver(userModel){
     },
 
     getUsers(){
-      return userModel.findAll()
+      return userModel.findAll({
+        "attributes":{ exclude:["createdAt","updatedAt"] }
+      })
         .then(users=>{
-          console.log("users found..",users)
-          return [
-            {"firstName":"erick","lastName":"garcia","id":"1","email":"eagm.08@gmail.com"},
-            {"firstName":"ana","lastName":"garcia","id":"2","email":"erickarmandogarcia@hotmail.com"},
-          ]
+          //parse the data
+          let newUsersList=users.map( (user)=>{
+            return user;
+          })
+          return newUsersList;
         })
     },
 
