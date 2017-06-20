@@ -11,7 +11,9 @@ function rootResolver(userModel){
   //the root provides the top-level API endpoints
   var root={
 
-    hello({myName}){
+    hello(args,request){
+      let { myName }=args;
+      console.log("server ip address...",request.ip)
       return "my name is "+myName;
     },
 
@@ -37,7 +39,6 @@ function rootResolver(userModel){
           let userObj=user.get({plain:true});
           return userObj;  
         })
-      
     },
 
     getMessage({id}){

@@ -5,7 +5,12 @@ var { buildSchema } = require('graphql');
 var Sequelize = require('sequelize');
 var schema=require("./mySchema");
 
-var userModel=require("./userModel")
+var userModel=require("./userModel");
+
+function logginMiddleware(req,res,next){
+  console.log("request ip from middleware...",req.ip);
+  next();
+}
 
 //initialize sequelize
 var sequelizeInstance= new Sequelize("sqlite:database.sqlite",{
@@ -22,6 +27,8 @@ var root=require("./resolvers")(User);
 var app= express();
 
 app.use(corser.create());
+
+app.use(logginMiddleware)
 
 app.use('/graphql',graphqlHTTP({
   schema:schema,
