@@ -4,6 +4,7 @@
   "description": "learning graphql ",
   "main": "index.js",
   "scripts": {
+    "start": " node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "erick",
@@ -13,8 +14,8 @@
     "express": "^4.15.2",
     "express-graphql": "^0.6.4",
     "express-jwt": "^5.3.0",
-    "graphql": "^0.9.6",
-    "sequelize": "^3.30.4",
+    "graphql": "^0.11.3",
+    "sequelize": "^4.8.2",
     "sqlite3": "^3.1.8"
   }
 }
