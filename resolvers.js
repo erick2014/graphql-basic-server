@@ -1,13 +1,9 @@
-//If Message had any complex fields, we'd put them on this object
-class Message {
-  constructor(id, { content, author }) {
-    this.id = id;
-    this.content = content;
-    this.author = author;
-  }
-}
+const UserModel = require("./models/userModel");
+const ClientModel = require("./models/clientModel");
 
-function rootResolver(userModel) {
+function rootResolver(sequelizeInstance) {
+  const userModel = sequelizeInstance.define('user', UserModel, { freezeTableName: true });
+  const clientModel = sequelizeInstance.define('client', ClientModel, { freezeTableName: true });
   //the root provides the top-level API endpoints
   var root = {
 
@@ -15,6 +11,17 @@ function rootResolver(userModel) {
       let { myName } = args;
       console.log("server ip address...", request.ip)
       return "my name is " + myName;
+    },
+
+    Clients() {
+      return clientModel.findAll()
+        .then(clients => {
+          //parse the data
+          let newClientsList = clients.map((client) => {
+            return client;
+          })
+          return newClientsList;
+        })
     },
 
     Users() {
@@ -28,7 +35,7 @@ function rootResolver(userModel) {
         })
     },
 
-    getUserInfo({ id }) {
+    UserInfo({ id }) {
       return userModel.findOne({
         "attributes": { exclude: ["createdAt", "updatedAt"] },
         "where": { id: id }
@@ -38,28 +45,6 @@ function rootResolver(userModel) {
           return userObj;
         })
     },
-
-    getMessage({ id }) {
-      if (!fakeDatabase[id]) {
-        throw new Error('no message exists with id ' + id);
-      }
-    },
-
-    createMessage({ input }) {
-      //create a random id for our "database"
-      var id = require('crypto').randomBytes(10).toString('hex');
-      fakeDatabase[id] = input;
-      return new Message(id, input);
-    },
-
-    updateMessage({ id, input }) {
-      if (!fakeDatabase[id]) {
-        throw new Error('no message exists with id ' + id);
-      }
-      //this replaces all old data, but some apps might want partial update
-      fakeDatabase[id] = input;
-      return new Message(id, input)
-    }
 
   }
   return root;
