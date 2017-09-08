@@ -5,8 +5,6 @@ var { buildSchema } = require('graphql');
 var Sequelize = require('sequelize');
 var schema = require("./mySchema");
 
-var userModel = require("./userModel");
-
 const port = process.env.PORT || 6000;
 
 function logginMiddleware(req, res, next) {
@@ -21,11 +19,9 @@ var sequelizeInstance = new Sequelize("sqlite:database.sqlite", {
     timestamps: false
   }
 });
-//define an user model
-var User = sequelizeInstance.define('user', userModel, { freezeTableName: true })
 
 //pass the User model to the resolvers
-var root = require("./resolvers")(User);
+var root = require("./resolvers")(sequelizeInstance);
 
 var app = express();
 
