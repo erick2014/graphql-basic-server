@@ -3,14 +3,9 @@ var corser = require("corser");
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
 var Sequelize = require('sequelize');
-var schema = require("./mySchema");
+var schema = require("./schema");
 
-const port = process.env.PORT || 6000;
-
-function logginMiddleware(req, res, next) {
-  console.log("request ip from middleware...", req.ip);
-  next();
-}
+const port = process.env.PORT || 4000;
 
 //initialize sequelize
 var sequelizeInstance = new Sequelize("sqlite:database.sqlite", {
@@ -20,21 +15,28 @@ var sequelizeInstance = new Sequelize("sqlite:database.sqlite", {
   }
 });
 
-//pass the User model to the resolvers
-var root = require("./resolvers")(sequelizeInstance);
+sequelizeInstance
+	.authenticate()
+	.then( resp => {
+		
+		var app = express();
 
-var app = express();
+		app.use(function(req,res,next){
+			req["sequelizeInstance"]=sequelizeInstance;
+			next();
+		})
 
-app.use(corser.create());
+		app.use(corser.create());
 
-app.use(logginMiddleware)
+		app.use('/graphql', graphqlHTTP({
+			schema: schema,
+			graphiql: true
+		}))
 
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true
-}))
+		app.listen(port);
 
-app.listen(port);
+		console.log(`running a graphql api server at localhost:${port}/graphql`)
+	})
+	.catch( err=>{
 
-console.log(`running a graphql api server at localhost:${port}/graphql`)
+	})
