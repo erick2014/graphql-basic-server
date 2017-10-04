@@ -1,0 +1,11 @@
+type Client{
+  id: Int
+  client: String
+  name: String,
+  address: String,
+  city: String,
+}
+
+type Query{
+  clients:[Client]
+}

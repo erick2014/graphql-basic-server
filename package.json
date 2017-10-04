@@ -1,21 +1,24 @@
 {
-  "name": "graphql-test",
-  "version": "1.0.0",
-  "description": "learning graphql ",
-  "main": "index.js",
-  "scripts": {
-    "start": " node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "erick",
-  "license": "ISC",
-  "dependencies": {
-    "corser": "2.0.1",
-    "express": "^4.15.2",
-    "express-graphql": "^0.6.4",
-    "express-jwt": "^5.3.0",
-    "graphql": "^0.11.3",
-    "sequelize": "^4.8.2",
-    "sqlite3": "^3.1.8"
-  }
+	"name": "graphql-test",
+	"version": "1.0.0",
+	"description": "learning graphql ",
+	"main": "index.js",
+	"scripts": {
+		"start": " node index.js",
+		"dev": "nodemon index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "erick",
+	"license": "ISC",
+	"dependencies": {
+		"corser": "2.0.1",
+		"express": "^4.15.2",
+		"express-graphql": "^0.6.4",
+		"express-jwt": "^5.3.0",
+		"graphql": "^0.11.3",
+		"merge-graphql-schemas": "^1.1.4",
+		"nodemon": "^1.12.1",
+		"sequelize": "^4.8.2",
+		"sqlite3": "^3.1.8"
+	}
 }
