@@ -1,9 +1,9 @@
 type User{
-	name: String,
-	lastName: String
-	age:Int
+  name: String,
+  lastName: String
+  age:Int
 }
 
 type Query{
-	users:[User]
+  users:[User]
 }
