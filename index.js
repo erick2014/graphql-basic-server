@@ -3,7 +3,9 @@ var corser = require("corser");
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
 var Sequelize = require('sequelize');
-var schema = require("./schema");
+//var schema = require("./schema");
+const schema = require("./mySchema");
+
 
 const port = process.env.PORT || 4000;
 
@@ -19,7 +21,9 @@ sequelizeInstance
 	.authenticate()
 	.then( resp => {
 		
-		var app = express();
+		const app = express();
+		//pass the User model to the resolvers
+		const root = require("./resolvers")();
 
 		app.use(function(req,res,next){
 			req["sequelizeInstance"]=sequelizeInstance;
@@ -30,6 +34,7 @@ sequelizeInstance
 
 		app.use('/graphql', graphqlHTTP({
 			schema: schema,
+			rootValue:root,
 			graphiql: true
 		}))
 
